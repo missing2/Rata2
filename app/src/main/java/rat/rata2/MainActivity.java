@@ -1,14 +1,27 @@
 package rat.rata2;
 
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import java.net.InetAddress;
 
 
 public class MainActivity extends ActionBarActivity {
 
-    //coment
+    public void  MainActivity(){
+        client a;
+        try {
+            //entro en mikel
+            InetAddress ip = InetAddress.getByName("192.168.85.1");
+            a=  new client(ip,2345);
+            System.out.println("se conecta bien a mikel");
+        } catch (Exception e) {
+            System.out.println("fallo al conectar con mikel");
+        }
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
