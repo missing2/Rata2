@@ -5,22 +5,12 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import java.net.InetAddress;
-
 
 public class MainActivity extends ActionBarActivity {
 
     public void  MainActivity(){
-        client a;
-        try {
-            //entro en mikel
-            InetAddress ip = InetAddress.getByName("192.168.85.1");
-            a=  new client(ip,2345);
-            System.out.println("se conecta bien a mikel");
-        } catch (Exception e) {
-            System.out.println("fallo al conectar con mikel");
-        }
 
+        client a=  new client();
     }
 
     @Override
