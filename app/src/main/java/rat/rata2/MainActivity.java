@@ -14,7 +14,10 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         Log.i("aquiiiii", "onCreate()");
         setContentView(R.layout.activity_main);
-        client a = new client();
+
+        bucle a = new bucle();//Se crea el hilo que hara de escuchador
+        a.execute();// lanzo el thread
+
     }
 
 

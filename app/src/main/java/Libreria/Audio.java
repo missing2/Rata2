@@ -5,9 +5,9 @@ import android.media.MediaRecorder;
 import android.os.Bundle;
 import android.os.Environment;
 
-import com.example.seginf.myapplication.R;
-
 import java.io.IOException;
+
+import rat.rata2.R;
 
 /**
  * Created by Vero on 06/05/2015.
