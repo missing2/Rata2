@@ -111,8 +111,8 @@ public class Transporte implements Paquete{
     }
 
     public byte[] build() {
-        byte[] cmdToSend = new byte[Protocol.HEADER_LENGTH_DATA + data.length];
-        byte[] header = Protocol.dataHeaderGenerator(this.totalLength,
+        byte[] cmdToSend = new byte[Protocolo.HEADER_LENGTH_DATA + data.length];
+        byte[] header = Protocolo.dataHeaderGenerator(this.totalLength,
                 this.localLength, this.last, this.NumSeq, this.channel);
         System.arraycopy(header, 0, cmdToSend, 0, header.length);
         System.arraycopy(data, 0, cmdToSend, header.length, data.length);
