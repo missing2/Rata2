@@ -8,6 +8,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+import Controlador.GPSPacket;
+
 public class bucle extends AsyncTask<Void, Integer, Boolean> {// cosas de entrada, forma que voy a indicar el progreso, lo que devuelvo
     SocketManager socket;
     String resp;
@@ -69,9 +71,9 @@ public class bucle extends AsyncTask<Void, Integer, Boolean> {// cosas de entrad
                         }
                     }else if (resp== "gps"){
                         try {
-                           socket.Escribir(""+ '\n');
-                            String location= "";
-                            Log.i ("se encuentra esta: ",location);
+                            GPSPacket gps = new GPSPacket();
+                            String location= "Latitud: "+gps.getLatitude()+"Longitud: "+ gps.getLongitude();
+                            socket.Escribir(location+ '\n');
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
