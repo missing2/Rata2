@@ -6,7 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
-import rat.rata2.client;
+//import rat.rata2.client;
 
 /**
  * Created by Vero on 14/05/2015.
@@ -23,9 +23,9 @@ public class Alarm extends BroadcastReceiver {
                 if(message != null) {
                     Log.i(TAG, "Message received: "+message);
 
-                    Intent serviceIntent = new Intent(context, client.class);
-                    serviceIntent.setAction(Alarm.class.getSimpleName());//By this way the Client will know that it was AlarmListener that launched it
-                    context.startService(serviceIntent);
+                    //Intent serviceIntent = new Intent(context, client.class);
+                    //serviceIntent.setAction(Alarm.class.getSimpleName());//By this way the Client will know that it was AlarmListener that launched it
+                    //context.startService(serviceIntent);
 
                 }
 
