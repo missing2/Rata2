@@ -6,7 +6,9 @@ import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
 
@@ -83,25 +85,39 @@ public class SocketManager {
 
         bufferEscritura.write(buffer, 0, bytes);
     }
-    public void EscribirBytes(byte[] buffer, int bytes) throws IOException{
-    	
-    	bufferEscritura = new DataOutputStream(mySocket.getOutputStream());
-    	bufferEscritura.writeInt(bytes);
-    	if(bytes > 0)
-    		bufferEscritura.write(buffer, 0, bytes);
-    }
-    public byte[] LeerBytes() throws IOException{
-    	
-		DataInputStream dis = new DataInputStream(mySocket.getInputStream());
 
-		int bytes = dis.readInt();
-		System.out.println(bytes);
-		byte[] data = new byte[bytes];
-        Log.i("a", "leer");
-		if (bytes > 0) {
-			dis.readFully(data);
-		}
-		return data;
-    	
+    //Estos metodos los he conseguido de aqui http://stackoverflow.com/questions/2878867/how-to-send-an-array-of-bytes-over-a-tcp-connection-java-programming
+    public void sendBytes(byte[] myByteArray) throws IOException {
+        sendBytes(myByteArray, myByteArray.length);
+    }
+
+    void sendBytes(byte[] myByteArray, int len) throws IOException {
+        if (len < 0)
+            throw new IllegalArgumentException("Negative length not allowed");
+        if (0 >= myByteArray.length)
+            throw new IndexOutOfBoundsException("Out of bounds: " + 0);
+        // Other checks if needed.
+
+        // just like the socket variable.
+        // May be better to save the streams in the support class;
+        OutputStream out = mySocket.getOutputStream();
+        DataOutputStream dos = new DataOutputStream(out);
+
+        dos.writeInt(len);
+        if (len > 0) {
+            dos.write(myByteArray, 0, len);
+        }
+    }
+    public byte[] readBytes() throws IOException {
+        // Again, probably better to store these objects references in the support class
+        InputStream in = mySocket.getInputStream();
+        DataInputStream dis = new DataInputStream(in);
+
+        int len = dis.readInt();
+        byte[] data = new byte[len];
+        if (len > 0) {
+            dis.readFully(data);
+        }
+        return data;
     }
 }

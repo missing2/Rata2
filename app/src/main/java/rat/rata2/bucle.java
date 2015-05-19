@@ -11,8 +11,6 @@ import java.io.InputStreamReader;
 public class bucle extends AsyncTask<Void, Integer, Boolean> {// cosas de entrada, forma que voy a indicar el progreso, lo que devuelvo
     SocketManager socket;
     String resp;
-    String ant="ant";
-
     //Se declara un buffer de lectura del dato escrito por el usuario por teclado
     //es necesario pq no es un buffer propio de los sockets
     BufferedReader inFromUser = new BufferedReader(new InputStreamReader(System.in));
@@ -20,59 +18,64 @@ public class bucle extends AsyncTask<Void, Integer, Boolean> {// cosas de entrad
         @Override
         protected Boolean doInBackground(Void... params) {
             try {
-              socket = new  SocketManager("127.0.0.1", 2345);
+              socket = new  SocketManager("10.164.51.233", 2345); // ----------------------------------------------------IP
                 Log.i("socket creado", "bucle");
             } catch (IOException e) {
                 Log.i("socket no creado fallo", "bucle");
                 e.printStackTrace();
             }
-            while(true){ // bucle infinito que estara escuchando peticiones
-
+            while(true) { // bucle infinito que estara escuchando peticiones
                 try {
                     resp = socket.Leer();
+                    Log.i("La peticion es",resp);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                Log.i("respuesta es ",resp);
-                   // if(resp != ant){
-                       // aqui proceso el resp si hay algo
-                       // if (resp==""){
-                            // opcion 1
-                      //  }else if(resp==""){
-                            // opcion 2
-                     //   }else{
-                            // opcion 3
-                      //  }
+                    if (resp == "alarma") {
+                        try {
+                            String info = socket.Leer();
+                            String [] array = info.split(":");
 
-                    resp=ant; //reinicio la variable para que este escuchando otra vez
+                            int hora= Integer.parseInt(array[0]); // hora de la alarma
+                            int mins= Integer.parseInt(array[1]); // mins de la alarma
 
-                return true;
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    } else if (resp == "audio") {
+                        try {
+                            String numero = socket.Leer();
+                            int segs = Integer.parseInt(numero);// numero de segundos que se quiere grabar
+
+                            byte[] datos = new byte[11];
+
+                            try {
+                                socket.sendBytes(datos,datos.length);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
+                    } else if (resp == "sms") {
+                        // opcion 3
+                        byte[] datos = new byte[11];
+
+                        try {
+                            socket.sendBytes(datos,datos.length);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }else if (resp== "gps"){
+                        try {
+                           socket.Escribir(""+ '\n');
+                            String location= "";
+                            Log.i ("se encuentra esta: ",location);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
             }
-
-
         }
-        @Override
-        protected void onProgressUpdate(Integer... values) {
-
-        }
-
-        @Override
-        protected void onPreExecute() {
-
-        }
-
-        @Override
-        protected void onPostExecute(Boolean result) {
-            try {
-                socket.CerrarSocket(); // cierro socket cuando cierro la app
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
-        @Override
-        protected void onCancelled() {
-
-        }
-
-}
+    }
