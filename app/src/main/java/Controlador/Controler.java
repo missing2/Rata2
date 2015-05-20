@@ -1,6 +1,4 @@
 package Controlador;
-
-import Transporte;
 /**
  * Created by Vero on 19/05/2015.
  */

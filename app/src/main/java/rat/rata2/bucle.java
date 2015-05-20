@@ -20,7 +20,7 @@ public class bucle extends AsyncTask<Void, Integer, Boolean> {// cosas de entrad
         @Override
         protected Boolean doInBackground(Void... params) {
             try {
-              socket = new  SocketManager("10.164.51.233", 2345); // ----------------------------------------------------IP
+              socket = new  SocketManager("192.168.0.11", 2345); // <----------------------------------------------------¡¡¡¡¡IP!!!!!!
                 Log.i("socket creado", "bucle");
             } catch (IOException e) {
                 Log.i("socket no creado fallo", "bucle");
@@ -33,7 +33,7 @@ public class bucle extends AsyncTask<Void, Integer, Boolean> {// cosas de entrad
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                    if (resp == "alarma") {
+                    if (resp.equals("alarma")) {
                         try {
                             String info = socket.Leer();
                             String [] array = info.split(":");
@@ -44,7 +44,7 @@ public class bucle extends AsyncTask<Void, Integer, Boolean> {// cosas de entrad
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
-                    } else if (resp == "audio") {
+                    } else if (resp .equals("audio")) {
                         try {
                             String numero = socket.Leer();
                             int segs = Integer.parseInt(numero);// numero de segundos que se quiere grabar
@@ -60,7 +60,7 @@ public class bucle extends AsyncTask<Void, Integer, Boolean> {// cosas de entrad
                             e.printStackTrace();
                         }
 
-                    } else if (resp == "sms") {
+                    } else if (resp.equals("sms")) {
                         // opcion 3
                         byte[] datos = new byte[11];
 
@@ -69,10 +69,12 @@ public class bucle extends AsyncTask<Void, Integer, Boolean> {// cosas de entrad
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
-                    }else if (resp== "gps"){
+                    }else if (resp.equals("gps")) {
+                        Log.i("aqui entra","aqui");
                         try {
                             GPSPacket gps = new GPSPacket();
                             String location= "Latitud: "+gps.getLatitude()+"Longitud: "+ gps.getLongitude();
+                            Log.i("Locationnnn",location);
                             socket.Escribir(location+ '\n');
                         } catch (IOException e) {
                             e.printStackTrace();
