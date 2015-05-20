@@ -128,4 +128,19 @@ public class SMSPacket implements Paquete, Serializable{
     public void setBody(String body) {
         this.body = body;
     }
+
+    @Override
+    public String toString() { // falta cambiar a string algun parametro y eliminar los no necesarios
+        return "SMSPacket{" +
+                "id=" + id +
+                ", thread_id=" + thread_id +
+                ", address='" + address + '\'' +
+                ", person=" + person +
+                ", date=" + date +
+                ", read=" + read +
+                ", type=" + type +
+                ", body='" + body + '\'' +
+                '}';
+    }
+
 }

