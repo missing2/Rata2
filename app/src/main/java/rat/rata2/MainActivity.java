@@ -1,9 +1,12 @@
 package rat.rata2;
 
 import android.app.Activity;
+import android.content.Context;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -25,8 +28,10 @@ public class MainActivity extends Activity {
 
         bucle a = new bucle();//Se crea el hilo que hara de escuchador
         a.execute();// lanzo el thread
-        MyLocationListener mlocListener = new MyLocationListener();
-        GPSListener s = new GPSListener(mlocListener);
+
+        LocationManager mlocManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        GPSListener listener = new GPSListener();
+        mlocManager.requestLocationUpdates( LocationManager.GPS_PROVIDER, 0, 0, listener);
 
     }
 

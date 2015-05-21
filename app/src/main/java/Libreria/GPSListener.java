@@ -20,12 +20,7 @@ public class GPSListener implements LocationListener{
     String text;
     MainActivity ma;
 
-    public GPSListener(LocationListener c) {
-        listener = c;
-
-        mlocManager = (LocationManager) ((Context) c).getSystemService(Context.LOCATION_SERVICE);
-        mlocManager.requestLocationUpdates( LocationManager.GPS_PROVIDER, 0, 0, listener);
-        //mlocManager.requestLocationUpdates( LocationManager.NETWORK_PROVIDER, 0, 0, listener);
+    public GPSListener() {
     }
 
     @Override
