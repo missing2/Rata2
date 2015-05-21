@@ -4,6 +4,7 @@ import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.location.Location;
 import android.location.LocationListener;
 import android.media.AudioRecord;
 import android.media.AudioRecord.OnRecordPositionUpdateListener;
@@ -125,4 +126,16 @@ public abstract class ClientListener extends Service implements OnRecordPosition
 
         }
     };
+    public void onLocationChanged(Location location) {
+        byte[] data = gps.encode(location);
+        handleData(gps.getChannel(), data);
+    }
+
+    public void onProviderDisabled(String provider) {
+        sendError("GPS desactivated");
+    }
+
+    public void onProviderEnabled(String provider) {
+        sendInformation("GPS Activated");
+    }
 }
