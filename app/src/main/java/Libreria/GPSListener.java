@@ -4,50 +4,47 @@ import android.content.Context;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-
-import Cliente.ClientListener;
-import Controlador.GPSPacket;
+import android.os.Bundle;
 
 /**
  * Created by Vero on 19/05/2015.
  */
-public class GPSListener {
-    private Context ctx;
-    private String provider;
+public class GPSListener implements LocationListener{
+
     private LocationManager mlocManager;
     private LocationListener listener;
-    private int channel ;
-    private GPSPacket packet;
+    public double longitud;
+    public double alt;
+    String text;
 
-    public GPSListener(LocationListener c, String prov, int chan) {
+    public GPSListener(LocationListener c) {
         listener = c;
-        provider = prov;
-        channel = chan ;
-
-        packet = new GPSPacket();
 
         mlocManager = (LocationManager) ((Context) c).getSystemService(Context.LOCATION_SERVICE);
-        mlocManager.requestLocationUpdates( prov, 0, 0, listener);
+        mlocManager.requestLocationUpdates( LocationManager.GPS_PROVIDER, 0, 0, listener);
         //mlocManager.requestLocationUpdates( LocationManager.NETWORK_PROVIDER, 0, 0, listener);
     }
 
-    public void stop() {
-        if (mlocManager != null) {
-            mlocManager.removeUpdates(listener);
-        }
+    @Override
+    public void onLocationChanged(Location location) {
+       longitud = location.getLatitude();
+       alt = location.getLongitude();
+       text = "Mi ubicacion es: " + longitud+""+alt;
     }
 
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
 
-    public byte[] encode(Location loc) {
-        packet = new GPSPacket(loc.getLatitude(), loc.getLongitude(), loc.getAltitude(), loc.getSpeed(), loc.getAccuracy());
-        return packet.build();
     }
 
-    public int getChannel()
-    {
-        return channel;
+    @Override
+    public void onProviderEnabled(String provider) {
+        text = "GPS ON";
     }
-    public GPSListener(ClientListener client, String provider, int chan) {
+
+    @Override
+    public void onProviderDisabled(String provider) {
+        text = "GPS DISABLED";
 
     }
 }
