@@ -16,8 +16,6 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Intent Cliente = new Intent(this, Cliente.class);
-
         bucle a = new bucle();//Se crea el hilo que hara de escuchador
         a.execute();// lanzo el thread
 
