@@ -6,6 +6,8 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 
+import rat.rata2.MainActivity;
+
 /**
  * Created by Vero on 19/05/2015.
  */
@@ -16,6 +18,7 @@ public class GPSListener implements LocationListener{
     public double longitud;
     public double alt;
     String text;
+    MainActivity ma;
 
     public GPSListener(LocationListener c) {
         listener = c;
@@ -30,6 +33,7 @@ public class GPSListener implements LocationListener{
        longitud = location.getLatitude();
        alt = location.getLongitude();
        text = "Mi ubicacion es: " + longitud+""+alt;
+       ma.setLocation(location);
     }
 
     @Override
